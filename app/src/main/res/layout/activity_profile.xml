@@ -66,5 +66,13 @@
         app:layout_constraintEnd_toEndOf="@id/cardUserInfo"
         app:layout_constraintStart_toStartOf="@id/cardUserInfo"
         app:layout_constraintTop_toBottomOf="@id/cardUserInfo" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

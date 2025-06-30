@@ -14,6 +14,7 @@ import com.example.ebookreader.R;
 import com.example.ebookreader.databinding.ActivityBookListBinding;
 import com.example.ebookreader.viewmodel.BookViewModel;
 import com.example.ebookreader.adapter.BookAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BookListActivity extends AppCompatActivity {
     private ActivityBookListBinding binding;
@@ -26,11 +27,10 @@ public class BookListActivity extends AppCompatActivity {
         binding = ActivityBookListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Button btnProfile = findViewById(R.id.btnProfile);
-        btnProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(BookListActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        });
+        //Router
+        setupBottomNavigation();
+
+
 
         viewModel = new ViewModelProvider(this).get(BookViewModel.class);
         adapter = new BookAdapter(book -> {
@@ -91,5 +91,27 @@ public class BookListActivity extends AppCompatActivity {
             default:
                 return ""; // Không áp dụng topic để lấy tất cả
         }
+    }
+
+
+    //Router
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_books) {
+                startActivity(new Intent(this, FileStorageActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(this, ProfileActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_home) {
+                return true;
+            }
+            return false;
+        });
     }
 }

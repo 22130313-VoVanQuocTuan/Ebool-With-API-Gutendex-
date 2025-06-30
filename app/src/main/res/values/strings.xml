@@ -7,4 +7,7 @@
     <string name="search">Search</string>
     <string name="read_online">Read Online</string>
     <string name="import_">Import</string>
+    <string name="ebook">Ebook</string>
+    <string name="memory">Memory</string>
+    <string name="profile">Profile</string>
 </resources>

@@ -13,8 +13,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.ebookreader.R;
 import com.example.ebookreader.api.Book;
 import com.example.ebookreader.databinding.ActivityBookDetailBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -49,6 +52,9 @@ public class BookDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState); // Sửa typo: setContentView thay vì setContentInstanceSet
         binding = ActivityBookDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //Router
+        setupBottomNavigation();
 
         book = (Book) getIntent().getSerializableExtra("BOOK");
         Log.d("BookDetail", "Đã nhận sách: " + (book != null ? book.title : "null"));
@@ -304,6 +310,27 @@ public class BookDetailActivity extends AppCompatActivity {
                     Toast.makeText(this, "Import thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show()
             );
         }
+        });
+    }
+
+    //Router
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_books) {
+                startActivity(new Intent(this, FileStorageActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                startActivity(new Intent(this, ProfileActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_home) {
+                return true;
+            }
+            return false;
         });
     }
 }

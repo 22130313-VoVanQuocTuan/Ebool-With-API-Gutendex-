@@ -7,9 +7,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.ebookreader.R;
+import com.example.ebookreader.databinding.ActivityBookListBinding;
+import com.example.ebookreader.databinding.ActivityProfileBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileActivity extends AppCompatActivity {
-
+    private ActivityProfileBinding binding;
     private TextView tvUsername, tvEmail;
     private Button btnLogout;
     private SharedPreferences prefs;
@@ -17,7 +20,12 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+        //Router
+        setupBottomNavigation();
 
         // Khởi tạo SharedPreferences
         prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
@@ -46,5 +54,29 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+
     }
+
+    //Router
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(this, BookListActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_books) {
+                startActivity(new Intent(this, FileStorageActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                return true;
+            }
+            return false;
+        });
+    }
+
 }

@@ -36,6 +36,11 @@
         <activity
             android:name=".view.ProfileActivity"
             android:exported="false" />
+        <activity android:name=".view.TextViewerActivity"
+            android:exported="false"/>
+        <activity android:name=".view.FileStorageActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
@@ -44,6 +49,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- FileProvider for sharing files -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.ebookreader.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
